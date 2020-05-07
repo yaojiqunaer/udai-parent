@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oracle.udai.product.domain.mapper.SpecParamMapper" >
+  <resultMap id="BaseResultMap" type="com.oracle.udai.product.domain.dto.SpecParam" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="spg_id" property="spgId" jdbcType="INTEGER" />
+    <result column="spp_id" property="sppId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="numeric" property="numeric" jdbcType="BIT" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="generic" property="generic" jdbcType="BIT" />
+    <result column="searching" property="searching" jdbcType="BIT" />
+    <result column="segements" property="segements" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, spg_id, spp_id, name, numeric, unit, generic, searching, segements, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_spec_param
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_spec_param
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.oracle.udai.product.domain.dto.SpecParam" >
+    insert into t_spec_param (id, spg_id, spp_id, 
+      name, numeric, unit, generic, 
+      searching, segements, is_deleted
+      )
+    values (#{id,jdbcType=INTEGER}, #{spgId,jdbcType=INTEGER}, #{sppId,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{numeric,jdbcType=BIT}, #{unit,jdbcType=VARCHAR}, #{generic,jdbcType=BIT}, 
+      #{searching,jdbcType=BIT}, #{segements,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.oracle.udai.product.domain.dto.SpecParam" >
+    insert into t_spec_param
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="spgId != null" >
+        spg_id,
+      </if>
+      <if test="sppId != null" >
+        spp_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="numeric != null" >
+        numeric,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="generic != null" >
+        generic,
+      </if>
+      <if test="searching != null" >
+        searching,
+      </if>
+      <if test="segements != null" >
+        segements,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="spgId != null" >
+        #{spgId,jdbcType=INTEGER},
+      </if>
+      <if test="sppId != null" >
+        #{sppId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="numeric != null" >
+        #{numeric,jdbcType=BIT},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="generic != null" >
+        #{generic,jdbcType=BIT},
+      </if>
+      <if test="searching != null" >
+        #{searching,jdbcType=BIT},
+      </if>
+      <if test="segements != null" >
+        #{segements,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.oracle.udai.product.domain.dto.SpecParam" >
+    update t_spec_param
+    <set >
+      <if test="spgId != null" >
+        spg_id = #{spgId,jdbcType=INTEGER},
+      </if>
+      <if test="sppId != null" >
+        spp_id = #{sppId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="numeric != null" >
+        numeric = #{numeric,jdbcType=BIT},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="generic != null" >
+        generic = #{generic,jdbcType=BIT},
+      </if>
+      <if test="searching != null" >
+        searching = #{searching,jdbcType=BIT},
+      </if>
+      <if test="segements != null" >
+        segements = #{segements,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.oracle.udai.product.domain.dto.SpecParam" >
+    update t_spec_param
+    set spg_id = #{spgId,jdbcType=INTEGER},
+      spp_id = #{sppId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      numeric = #{numeric,jdbcType=BIT},
+      unit = #{unit,jdbcType=VARCHAR},
+      generic = #{generic,jdbcType=BIT},
+      searching = #{searching,jdbcType=BIT},
+      segements = #{segements,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oracle.udai.product.domain.mapper.SkuMapper">
+    <resultMap id="BaseResultMap" type="com.oracle.udai.product.domain.dto.Sku">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="spu_id" property="spuId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="images" property="images" jdbcType="OTHER"/>
+        <result column="seckill" property="seckill" jdbcType="BIT"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="param" property="param" jdbcType="OTHER"/>
+        <result column="saleable" property="saleable" jdbcType="BIT"/>
+        <result column="valid" property="valid" jdbcType="BIT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, spu_id, title, images, seckill, start_time, end_time, count, price, param, saleable, 
+    valid, create_time, last_update_time, is_deleted
+  </sql>
+    <select id="selectByPrimaryKey" resultType="com.oracle.udai.api.vo.SkuVO" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sku
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectSkuByCategoryId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sku
+        where id = #{id,jdbcType=INTEGER}
+
+    </select>
+
+    <select id="selectBySpuId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sku
+        where spu_id = #{spuId}
+    </select>
+    <select id="selectAllList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sku
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_sku
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.oracle.udai.product.domain.dto.Sku">
+    insert into t_sku (id, spu_id, title, 
+      images, seckill, start_time, 
+      end_time, count, price, 
+      param, saleable, valid, create_time, 
+      last_update_time, is_deleted)
+    values (#{id,jdbcType=INTEGER}, #{spuId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{images,jdbcType=OTHER}, #{seckill,jdbcType=BIT}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{count,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
+      #{param,jdbcType=OTHER}, #{saleable,jdbcType=BIT}, #{valid,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.oracle.udai.product.domain.dto.Sku">
+        insert into t_sku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="spuId != null">
+                spu_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="images != null">
+                images,
+            </if>
+            <if test="seckill != null">
+                seckill,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="count != null">
+                count,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="param != null">
+                param,
+            </if>
+            <if test="saleable != null">
+                saleable,
+            </if>
+            <if test="valid != null">
+                valid,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="spuId != null">
+                #{spuId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="images != null">
+                #{images,jdbcType=OTHER},
+            </if>
+            <if test="seckill != null">
+                #{seckill,jdbcType=BIT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="count != null">
+                #{count,jdbcType=INTEGER},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="param != null">
+                #{param,jdbcType=OTHER},
+            </if>
+            <if test="saleable != null">
+                #{saleable,jdbcType=BIT},
+            </if>
+            <if test="valid != null">
+                #{valid,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.oracle.udai.product.domain.dto.Sku">
+        update t_sku
+        <set>
+            <if test="spuId != null">
+                spu_id = #{spuId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="images != null">
+                images = #{images,jdbcType=OTHER},
+            </if>
+            <if test="seckill != null">
+                seckill = #{seckill,jdbcType=BIT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="count != null">
+                count = #{count,jdbcType=INTEGER},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="param != null">
+                param = #{param,jdbcType=OTHER},
+            </if>
+            <if test="saleable != null">
+                saleable = #{saleable,jdbcType=BIT},
+            </if>
+            <if test="valid != null">
+                valid = #{valid,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.oracle.udai.product.domain.dto.Sku">
+    update t_sku
+    set spu_id = #{spuId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      images = #{images,jdbcType=OTHER},
+      seckill = #{seckill,jdbcType=BIT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      count = #{count,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      param = #{param,jdbcType=OTHER},
+      saleable = #{saleable,jdbcType=BIT},
+      valid = #{valid,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

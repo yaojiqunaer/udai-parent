@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oracle.udai.product.domain.mapper.SpuMapper">
+    <resultMap id="BaseResultMap" type="com.oracle.udai.product.domain.dto.Spu">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="sub_title" property="subTitle" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="brand_id" property="brandId" jdbcType="INTEGER"/>
+        <result column="spg_id" property="spgId" jdbcType="INTEGER"/>
+        <result column="saleable" property="saleable" jdbcType="BIT"/>
+        <result column="valid" property="valid" jdbcType="BIT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_delete" property="isDelete" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, title, sub_title, category_id, brand_id, spg_id, saleable, valid, create_time, 
+    last_update_time, is_delete
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_spu
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectSpuListByCategoryIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from t_spu
+        where
+        t_spu.category_id in
+        <foreach collection="list" item="item" open="(" separator="," close=")" index="0">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectSpuLowPriceBySkuId" parameterType="java.lang.Integer" resultType="java.math.BigDecimal">
+        SELECT price FROM t_sku
+        WHERE spu_id = #{skuId}
+        ORDER BY price
+        LIMIT 0,1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_spu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.oracle.udai.product.domain.dto.Spu">
+    insert into t_spu (id, title, sub_title, 
+      category_id, brand_id, spg_id, 
+      saleable, valid, create_time, 
+      last_update_time, is_delete)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, 
+      #{categoryId,jdbcType=INTEGER}, #{brandId,jdbcType=INTEGER}, #{spgId,jdbcType=INTEGER}, 
+      #{saleable,jdbcType=BIT}, #{valid,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.oracle.udai.product.domain.dto.Spu">
+        insert into t_spu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="subTitle != null">
+                sub_title,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="brandId != null">
+                brand_id,
+            </if>
+            <if test="spgId != null">
+                spg_id,
+            </if>
+            <if test="saleable != null">
+                saleable,
+            </if>
+            <if test="valid != null">
+                valid,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="subTitle != null">
+                #{subTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=INTEGER},
+            </if>
+            <if test="brandId != null">
+                #{brandId,jdbcType=INTEGER},
+            </if>
+            <if test="spgId != null">
+                #{spgId,jdbcType=INTEGER},
+            </if>
+            <if test="saleable != null">
+                #{saleable,jdbcType=BIT},
+            </if>
+            <if test="valid != null">
+                #{valid,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.oracle.udai.product.domain.dto.Spu">
+        update t_spu
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="subTitle != null">
+                sub_title = #{subTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=INTEGER},
+            </if>
+            <if test="brandId != null">
+                brand_id = #{brandId,jdbcType=INTEGER},
+            </if>
+            <if test="spgId != null">
+                spg_id = #{spgId,jdbcType=INTEGER},
+            </if>
+            <if test="saleable != null">
+                saleable = #{saleable,jdbcType=BIT},
+            </if>
+            <if test="valid != null">
+                valid = #{valid,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.oracle.udai.product.domain.dto.Spu">
+    update t_spu
+    set title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      spg_id = #{spgId,jdbcType=INTEGER},
+      saleable = #{saleable,jdbcType=BIT},
+      valid = #{valid,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,45 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: APIGATEWAY
+  redis:
+    host: 192.168.0.201
+    port: 6379
+    timeout: 15000
+    database: 0
+  session:
+    store-type: redis
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+zuul:
+  routes:
+    product: #\u81EA\u5B9A\u4E49\u8DEF\u7531\u89C4\u5219
+      path: /pro/**  #\u8BBF\u95EE\u89C4\u5219 \u5C06PRODUCT\u6539\u4E3Apro
+      serviceId: PRODUCT  #eureka\u670D\u52A1\u540D
+      sensitiveHeaders:   #\u5141\u8BB8\u4F20\u9012cookie,\u8BBE\u7F6E\u4E3A\u7A7A\u5373\u53EF
+    user: #\u81EA\u5B9A\u4E49\u8DEF\u7531\u89C4\u5219
+      path: /user/**  #\u8BBF\u95EE\u89C4\u5219 \u5C06PRODUCT\u6539\u4E3Apro
+      serviceId: CUSTOMER  #eureka\u670D\u52A1\u540D
+      sensitiveHeaders:   #\u5141\u8BB8\u4F20\u9012cookie,\u8BBE\u7F6E\u4E3A\u7A7A\u5373\u53EF
+  ignored-patterns:
+    - /product/**   #\u7981\u7528\u8DEF\u7531
+    - /customer/**
+  host:
+    connect-timeout-millis: 15000  #连接超时时间，大于hystrix
+    socket-timeout-millis: 15000
+ribbon:
+  ReadTimeout: 5000
+  ConnectionTimeout: 5000  #ribbon连接超时必须小于hystrix
+  eureka:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000   #降级时间允许10s
+

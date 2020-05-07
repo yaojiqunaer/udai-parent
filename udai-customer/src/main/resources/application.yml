@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: CUSTOMER
+  redis:
+    host: 192.168.0.201
+    port: 6379
+    database: 0
+    timeout: 15000
+  session:
+    store-type: redis
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/udai?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8081
+mybatis:
+  type-aliases-package: com.oracle.udai.customer.domain.dto
+  mapper-locations: classpath:mapping/*.xml

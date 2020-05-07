@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oracle.udai.order.domain.mapper.OrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.oracle.udai.order.domain.dto.OrderDetail" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <id column="sku_id" property="skuId" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="actual_price" property="actualPrice" jdbcType="DECIMAL" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, sku_id, price, actual_price, num, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.oracle.udai.order.domain.dto.OrderDetailKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_detail
+    where order_id = #{orderId,jdbcType=INTEGER}
+      and sku_id = #{skuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.oracle.udai.order.domain.dto.OrderDetailKey" >
+    delete from t_order_detail
+    where order_id = #{orderId,jdbcType=INTEGER}
+      and sku_id = #{skuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.oracle.udai.order.domain.dto.OrderDetail" >
+    insert into t_order_detail (order_id, sku_id, price, 
+      actual_price, num, is_deleted
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{skuId,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
+      #{actualPrice,jdbcType=DECIMAL}, #{num,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.oracle.udai.order.domain.dto.OrderDetail" >
+    insert into t_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="actualPrice != null" >
+        actual_price,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="skuId != null" >
+        #{skuId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPrice != null" >
+        #{actualPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.oracle.udai.order.domain.dto.OrderDetail" >
+    update t_order_detail
+    <set >
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPrice != null" >
+        actual_price = #{actualPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+      and sku_id = #{skuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.oracle.udai.order.domain.dto.OrderDetail" >
+    update t_order_detail
+    set price = #{price,jdbcType=DECIMAL},
+      actual_price = #{actualPrice,jdbcType=DECIMAL},
+      num = #{num,jdbcType=INTEGER},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where order_id = #{orderId,jdbcType=INTEGER}
+      and sku_id = #{skuId,jdbcType=INTEGER}
+  </update>
+</mapper>

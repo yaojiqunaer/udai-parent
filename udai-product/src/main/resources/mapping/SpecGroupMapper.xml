@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oracle.udai.product.domain.mapper.SpecGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.oracle.udai.product.domain.dto.SpecGroup" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="spg_id" property="spgId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="is_delted" property="isDelted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, spg_id, name, is_delted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_spec_group
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_spec_group
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.oracle.udai.product.domain.dto.SpecGroup" >
+    insert into t_spec_group (id, spg_id, name, 
+      is_delted)
+    values (#{id,jdbcType=INTEGER}, #{spgId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{isDelted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.oracle.udai.product.domain.dto.SpecGroup" >
+    insert into t_spec_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="spgId != null" >
+        spg_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="isDelted != null" >
+        is_delted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="spgId != null" >
+        #{spgId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelted != null" >
+        #{isDelted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.oracle.udai.product.domain.dto.SpecGroup" >
+    update t_spec_group
+    <set >
+      <if test="spgId != null" >
+        spg_id = #{spgId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelted != null" >
+        is_delted = #{isDelted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.oracle.udai.product.domain.dto.SpecGroup" >
+    update t_spec_group
+    set spg_id = #{spgId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      is_delted = #{isDelted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

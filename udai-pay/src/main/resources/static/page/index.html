@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input id="out_trade_no"/>
+<button id="pay">支付</button>
+</body>
+
+<script src="../js/jquery-1.8.3.js"></script>
+<script>
+    $("#pay").click(function () {
+        $.ajax({
+            url: "http://nav0six.hn3.mofasuidao.cn/pay",
+            type: 'post',
+            data: {"out_trade_no": $("#out_trade_no").val()},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code == 0) {
+                    //支付成功
+                    localStorage.setItem("form", data.data);
+                    location.href="http://nav0six.hn3.mofasuidao.cn/page/success.html";
+                }
+            }
+
+        })
+    })
+
+</script>
+</html>

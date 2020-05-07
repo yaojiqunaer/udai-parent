@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oracle.udai.product.domain.mapper.CategoryBrandMapper" >
+  <resultMap id="BaseResultMap" type="com.oracle.udai.product.domain.dto.CategoryBrand" >
+    <id column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <id column="brand_id" property="brandId" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    category_id, brand_id, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.oracle.udai.product.domain.dto.CategoryBrandKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_category_brand
+    where category_id = #{categoryId,jdbcType=INTEGER}
+      and brand_id = #{brandId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.oracle.udai.product.domain.dto.CategoryBrandKey" >
+    delete from t_category_brand
+    where category_id = #{categoryId,jdbcType=INTEGER}
+      and brand_id = #{brandId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.oracle.udai.product.domain.dto.CategoryBrand" >
+    insert into t_category_brand (category_id, brand_id, is_deleted
+      )
+    values (#{categoryId,jdbcType=INTEGER}, #{brandId,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.oracle.udai.product.domain.dto.CategoryBrand" >
+    insert into t_category_brand
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="brandId != null" >
+        brand_id,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null" >
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.oracle.udai.product.domain.dto.CategoryBrand" >
+    update t_category_brand
+    <set >
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where category_id = #{categoryId,jdbcType=INTEGER}
+      and brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.oracle.udai.product.domain.dto.CategoryBrand" >
+    update t_category_brand
+    set is_deleted = #{isDeleted,jdbcType=BIT}
+    where category_id = #{categoryId,jdbcType=INTEGER}
+      and brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+</mapper>
